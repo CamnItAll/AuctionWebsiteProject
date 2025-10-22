@@ -1,1 +1,0 @@
-Text file used for making sure "model" folder appears in the repo -- remove before submission.
