@@ -6,7 +6,6 @@
   <artifactId>auction-app-project</artifactId>
   <version>1.0.0</version>
   <packaging>war</packaging>
-  <version>1.0-SNAPSHOT</version>
   <name>auction-app-project Maven Webapp</name>
   <url>http://maven.apache.org</url>
 
