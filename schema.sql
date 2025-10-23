@@ -1,0 +1,17 @@
+CREATE DATABASE IF NOT EXISTS auction_site DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+USE auction_site;
+
+CREATE TABLE IF NOT EXISTS users (
+	u_id INT NOT NULL AUTO_INCREMENT,
+	f_name VARCHAR(80) NOT NULL,
+	l_name VARCHAR(80) NOT NULL,
+    usernm VARCHAR(255) NOT NULL,
+	passwd VARCHAR(255) NOT NULL,
+	email VARCHAR(190) NOT NULL UNIQUE,
+    stret_name VARCHAR(255) NOT NULL,
+    stret_num INT NOT NULL,
+    country VARCHAR(255) NOT NULL,
+    city VARCHAR(255) NOT NULL,
+    post_code VARCHAR(255) NOT NULL,
+	PRIMARY KEY (u_id)
+);
