@@ -1,0 +1,3 @@
+This is a simple Springboot project I made that works with an external Tomcat.
+Just go to the root folder in Command Prompt/Powershell and mvn clean package it,
+then put it in your Tomcat directory's webapp folder and run startup.bat from the bin directory.
