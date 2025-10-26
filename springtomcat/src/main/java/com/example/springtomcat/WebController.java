@@ -2,14 +2,13 @@ package com.example.springtomcat;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
 
-@RestController
-@RequestMapping
+@Controller
 public class WebController {
     @GetMapping("/") 
-    public String getMessage()
+    public String testing()
     {
-        return "Hello, World!;
+    	return "index";
     }
 }
