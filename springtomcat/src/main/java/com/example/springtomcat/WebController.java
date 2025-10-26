@@ -10,6 +10,6 @@ public class WebController {
     @GetMapping("/") 
     public String getMessage()
     {
-        return "Hello, you fucking indecisive son of a bitch, I mean CHRIST how many times are you gonna drive aspiring students up the fucking wall until you've been satisfied???";
+        return "Hello, World!;
     }
 }
