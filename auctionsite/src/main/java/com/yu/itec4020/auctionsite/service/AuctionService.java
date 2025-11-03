@@ -20,8 +20,6 @@ public class AuctionService {
     private ItemRepository itemRepo;
 	@Autowired
     private BidRepository bidRepo;
-	@Autowired
-	private PaymentRepository paymentRepo;
 	
 	public Item findByAuctionId(int itemId) {
         return itemRepo.findById(itemId);
@@ -47,18 +45,6 @@ public class AuctionService {
         itemRepo.save(auction); // Save auction state
         return bidRepo.save(bid); // Save the bid
         }
-	
-	public Payment makePayment(int itemId, User user, Double amount) throws IllegalArgumentException{
-        Item item = findByAuctionId(itemId);
-        if (item.getHighestBidder() != null && item.getHighestBidder().equals(user)) {
-            Payment payment = new Payment();
-            payment.setAmount(amount);
-            payment.setBuyer(user);
-            payment.setItem(item);
-            return paymentRepo.save(payment);
-        }
-        throw new IllegalArgumentException("Only the highest bidder can make a payment.");
-    }
 	
 	public void updateDutchAuctionPrice(int itemId, Double newPrice) {
         Item item = findByAuctionId(itemId);

@@ -18,8 +18,12 @@ public class CatalogueService {
 			return itemRepo.findByNameContaining(keyword);
     }
 	
-    public Item findById(int itemId) {
+	public Item findByAuctionId(int itemId) {
         return itemRepo.findById(itemId);
+    }
+	
+	public Item saveItem (Item item) {
+        return itemRepo.save(item);
     }
 
 }

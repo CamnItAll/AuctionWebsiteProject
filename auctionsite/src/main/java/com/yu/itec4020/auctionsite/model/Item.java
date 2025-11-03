@@ -11,7 +11,7 @@ public class Item {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 	
 	@Column(nullable = false)
     private String name;
@@ -53,8 +53,8 @@ public class Item {
     private User highestBidder; // Highest bidder in a forward auction
 	
 	// ---------- Getters and Setters ----------
-    public int getItemId() { return id; }
-    public void setItemId(int id) { this.id = id; }
+    public Integer getItemId() { return id; }
+    public void setItemId(Integer id) { this.id = id; }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }

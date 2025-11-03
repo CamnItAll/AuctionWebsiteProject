@@ -1,5 +1,5 @@
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
@@ -32,8 +32,8 @@
         <form action="<c:url value='/auction/${item.itemId}'/>" method="get">
             <p>${item.name}</p>
             <p>${item.description}</p>
-            <p>Start Price: $${item.startPrice}</p>
-            <p>Latest Price: $${item.currentPrice}</p>
+            <p>Start Price: <fmt:formatNumber value="${item.startPrice}" type="currency"/></p>
+            <p>Latest Price: <fmt:formatNumber value="${item.currentPrice}" type="currency"/></p>
             <p>Latest Bidder: ${item.highestBidder.username}</p>
             <p>Auction Type: ${item.auctionType}</p>
             <button type="submit">Bid on ${item.name}</button>

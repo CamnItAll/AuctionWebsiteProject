@@ -1,6 +1,6 @@
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
@@ -13,9 +13,8 @@
 <body style="text-align:center;">
     <h1>${item.name}</h1>
     <p>${item.description}</p>
-    <p>Current Price: $${item.currentPrice}</p>
+    <p>Current Price: <fmt:formatNumber value="${item.currentPrice}" type="currency"/></p>
 
-    <p>D${isOwnerD} F${isOwnerF} Bid${canBid} Buy${canBuyNow} E${auctionEnded} EB${auctionEndedBuy}</p>
     <c:if test="${canBid}">
         <form action="<c:url value='/auction/placeBid/${item.itemId}'/>" method="post">
             <p>Latest Bidder: ${item.highestBidder.username}</p>
@@ -55,10 +54,10 @@
     <c:if test="${auctionEnded}">
         <p>Latest Bidder: ${item.highestBidder.username}</p>
         <p>Auction Type: ${item.auctionType}</p>
-        <p>This auction is over.</p>
+        <p>This auction is over. Only the highest bidder can make their payment.</p>
     </c:if>
     <c:if test="${auctionEndedBuy}">
-        <form action="<c:url value='/auction/updateDutchPrice/${item.itemId}'/>" method="post">
+        <form action="<c:url value='/payment/${item.itemId}/pay'/>" method="post">
             <p>Latest Bidder: ${item.highestBidder.username}</p>
             <p>Auction Type: ${item.auctionType}</p>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />

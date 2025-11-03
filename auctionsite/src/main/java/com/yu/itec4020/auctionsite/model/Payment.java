@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     
     @ManyToOne
     @JoinColumn(name = "buyer_id", nullable = false)
@@ -37,8 +37,8 @@ public class Payment {
     private LocalDateTime paymentDate = LocalDateTime.now();
 
     // ---------- Getters and Setters ----------
-    public int getPaymentId() { return id; }
-    public void setPaymentId(int id) { this.id = id; }
+    public Integer getPaymentId() { return id; }
+    public void setPaymentId(Integer id) { this.id = id; }
     
     public User getBuyer() { return buyer; }
     public void setBuyer(User buyer) { this.buyer = buyer; }
@@ -61,6 +61,6 @@ public class Payment {
     public String getCvv() { return cvv; }
     public void setCvv(String cvv) { this.cvv = cvv; }
     
-    public LocalDateTime getPaymenttDate() { return paymentDate; }
+    public LocalDateTime getPaymentDate() { return paymentDate; }
 }
 

@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS users (
 	postal_code VARCHAR(80) NOT NULL,
 	created_at VARCHAR(255) NOT NULL
 	);
-	CREATE INDEX idx_users_username ON users(username);
+CREATE INDEX idx_users_username ON users(username);
 	
 CREATE TABLE IF NOT EXISTS items (
 	id INTEGER PRIMARY KEY AUTO_INCREMENT,
@@ -22,10 +22,10 @@ CREATE TABLE IF NOT EXISTS items (
 	description VARCHAR(255) NOT NULL,
 	start_price DOUBLE NOT NULL,
 	current_price DOUBLE NOT NULL,
-	auction_status ENUM('OPEN', 'CLOSED') NOT NULL,
+	auction_status VARCHAR(6) NOT NULL,
     start_date TIMESTAMP NOT NULL,
     end_date TIMESTAMP NOT NULL,
-	auction_type VARCHAR(10) NOT NULL,
+	auction_type ENUM('FORWARD', 'DUTCH'),
 	expedited_shipping_price DOUBLE NOT NULL,
 	shipping_days INTEGER NOT NULL,
     owner_id INTEGER NOT NULL,
@@ -42,4 +42,18 @@ CREATE TABLE IF NOT EXISTS bids (
 	bid_date TIMESTAMP NOT NULL,
     FOREIGN KEY (item_id) REFERENCES items(id),
     FOREIGN KEY (user_id) REFERENCES users(id)
+	);
+    
+CREATE TABLE IF NOT EXISTS payments (
+	id INTEGER PRIMARY KEY AUTO_INCREMENT,
+	buyer_id INTEGER NOT NULL,
+	item_id INTEGER NOT NULL,
+	amount_paid DOUBLE NOT NULL,
+	card_num VARCHAR(19) NOT NULL,
+    card_name VARCHAR(99) NOT NULL,
+    expire_date VARCHAR(10) NOT NULL,
+    cvv VARCHAR(3) NOT NULL,
+    payment_date TIMESTAMP NOT NULL,
+    FOREIGN KEY (buyer_id) REFERENCES users(id),
+    FOREIGN KEY (item_id) REFERENCES items(id)
 	);

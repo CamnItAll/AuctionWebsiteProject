@@ -34,11 +34,15 @@ public class WebSecurityConfig {
             .authorizeHttpRequests(auth -> auth
             		.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
             		.requestMatchers(
-                    "/login",
-                    "/registration",
-                    "/resources/**"
-            		).permitAll()
-            	.requestMatchers("/catalogue/new", "/catalogue/save", "/catalogue/create", "/auction/pay/{itemId}", "/auction/placeBid/{itemId}", "/auction/updateDutchPrice/{itemId}").authenticated()
+	                    "/login",
+	                    "/registration",
+	                    "/resources/**"
+	            		).permitAll()
+            	.requestMatchers(
+            			"/catalogue/new", "/catalogue/save", "/catalogue/create",
+            			"/auction/pay/{itemId}", "/auction/placeBid/{itemId}", "/auction/updateDutchPrice/{itemId}",
+            			"/payment/{itemId}/pay", "/payment/{itemId}/receipt"
+            			).authenticated()
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form

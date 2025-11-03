@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS payments (
 	amount_paid DOUBLE NOT NULL,
 	card_num VARCHAR(19) NOT NULL,
     card_name VARCHAR(99) NOT NULL,
-    expire_date VARCHAR(6) NOT NULL,
+    expire_date VARCHAR(10) NOT NULL,
     cvv VARCHAR(3) NOT NULL,
     payment_date TIMESTAMP NOT NULL,
     FOREIGN KEY (buyer_id) REFERENCES users(id),
