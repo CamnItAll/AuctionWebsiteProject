@@ -15,7 +15,7 @@ public class AuthenService implements UserDetailsService{
     @Autowired
     private UserRepository repo;
 
-    @Override
+    //@Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = repo.findByUsername(username);

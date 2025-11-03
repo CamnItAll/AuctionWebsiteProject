@@ -38,12 +38,13 @@ public class WebSecurityConfig {
                     "/registration",
                     "/resources/**"
             		).permitAll()
+            	.requestMatchers("/catalogue/new", "/catalogue/save", "/catalogue/create", "/auction/pay/{itemId}", "/auction/placeBid/{itemId}", "/auction/updateDutchPrice/{itemId}").authenticated()
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
-                .loginPage("/login")                 // GET /login -> your JSP
+                .loginPage("/login")// GET /login -> your JSP
                 .loginProcessingUrl("/perform_login")// POST /perform_login -> Spring Security handles login
-                .defaultSuccessUrl("/welcome", true) // Redirect here after success
+                .defaultSuccessUrl("/catalogue", true) // Redirect here after success
                 .failureUrl("/login?error=true")
                 .permitAll()
             )

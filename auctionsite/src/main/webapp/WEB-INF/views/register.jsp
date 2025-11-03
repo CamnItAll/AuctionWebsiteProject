@@ -24,7 +24,7 @@
 
         <spring:bind path="password">
           <label>Password</label>
-          <form:input type="password" path="password" placeholder="Password"/>
+          <form:input type="password" path="password" placeholder="Password"/><br>
           <form:errors path="password" cssClass="error"/>
         </spring:bind><br><br>
 
@@ -77,7 +77,9 @@
         </spring:bind><br><br>
 
         <button type="submit">Register</button>
-      </form:form>
+      </form:form><br>
+
+      <a href="<c:url value='/login'/>">Back to Login</a>
     </div>
   </body>
 </html>

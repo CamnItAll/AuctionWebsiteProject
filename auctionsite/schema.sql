@@ -14,4 +14,32 @@ CREATE TABLE IF NOT EXISTS users (
 	postal_code VARCHAR(80) NOT NULL,
 	created_at VARCHAR(255) NOT NULL
 	);
-CREATE INDEX idx_users_username ON users(username);
+	CREATE INDEX idx_users_username ON users(username);
+	
+CREATE TABLE IF NOT EXISTS items (
+	id INTEGER PRIMARY KEY AUTO_INCREMENT,
+	name VARCHAR(255) UNIQUE NOT NULL,
+	description VARCHAR(255) NOT NULL,
+	start_price DOUBLE NOT NULL,
+	current_price DOUBLE NOT NULL,
+	auction_status ENUM('OPEN', 'CLOSED') NOT NULL,
+    start_date TIMESTAMP NOT NULL,
+    end_date TIMESTAMP NOT NULL,
+	auction_type VARCHAR(10) NOT NULL,
+	expedited_shipping_price DOUBLE NOT NULL,
+	shipping_days INTEGER NOT NULL,
+    owner_id INTEGER NOT NULL,
+    highest_bidder_id INTEGER,
+    FOREIGN KEY (owner_id) REFERENCES users(id),
+    FOREIGN KEY (highest_bidder_id) REFERENCES users(id)
+	);
+	
+CREATE TABLE IF NOT EXISTS bids (
+	id INTEGER PRIMARY KEY AUTO_INCREMENT,
+	item_id INTEGER NOT NULL,
+	user_id INTEGER NOT NULL,
+	amount DOUBLE NOT NULL,
+	bid_date TIMESTAMP NOT NULL,
+    FOREIGN KEY (item_id) REFERENCES items(id),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+	);

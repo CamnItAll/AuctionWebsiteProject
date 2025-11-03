@@ -31,13 +31,10 @@ public class UserController {
     @PostMapping("/registration")
     public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
         userValidator.validate(userForm, bindingResult);
-
         if (bindingResult.hasErrors()) {
             return "register";
         }
-
         userService.save(userForm);
-
         securityService.autoLogin(userForm.getUsername(), userForm.getPassword());
 
         return "redirect:/login?registered=true";
@@ -60,8 +57,8 @@ public class UserController {
         return "redirect:/login";
     }
 
-    @GetMapping("/welcome")
-    public String welcome(Model model) {
-        return "welcome";
+    @GetMapping("/catalogue")
+    public String catalogue(Model model) {
+        return "catalogue";
     }
 }

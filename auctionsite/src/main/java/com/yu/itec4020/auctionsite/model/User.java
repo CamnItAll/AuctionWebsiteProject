@@ -1,7 +1,7 @@
 package com.yu.itec4020.auctionsite.model;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Entity
 @Table(name = "users")
@@ -42,7 +42,7 @@ public class User {
     private String postalCode;
 
     @Column(name = "created_at", nullable = false)
-    private String createdAt = LocalDateTime.now().toString();
+    private String createdAt = Instant.now().toString();
 
     // ---------- Getters and Setters ----------
     public Integer getId() { return id; }
