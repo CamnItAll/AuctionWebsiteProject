@@ -21,25 +21,25 @@
     <p>Is Owner: ${isOwner}</p>
 
     <c:if test="${canBid}">
-        <form action="/auction/placeBid/${item.itemId}" method="post">
+        <form action="<c:url value='/auction/placeBid/${item.itemId}'/>" method="post">
             <input type="number" name="bidAmount" min="${auction.currentPrice}" step="0.01" required>
             <button type="submit">Place Bid</button>
         </form>
     </c:if>
 
     <c:if test="${canBuyNow}">
-        <form action="/auction/pay/${item.itemId}" method="post">
+        <form action="<c:url value='/auction/pay/${item.itemId}'/>" method="post">
             <button type="submit">Buy Now</button>
         </form>
     </c:if>
 
     <c:if test="${isOwner}">
-        <form action="/auction/updateDutchPrice/${item.itemId}" method="post">
+        <form action="<c:url value='/auction/updateDutchPrice/${item.itemId}'/>" method="post">
             <input type="number" name="newPrice" value="${item.startPrice}" step="0.01" required>
             <button type="submit">Update Dutch Auction Price</button>
         </form>
     </c:if><br>
 
-    <a href="/catalogue">Back to Catalog</a>
+    <a href="<c:url value='/catalogue'/>">Back to Catalog</a>
 </body>
 </html>

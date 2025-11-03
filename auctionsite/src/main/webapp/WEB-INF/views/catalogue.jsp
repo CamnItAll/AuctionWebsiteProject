@@ -20,7 +20,7 @@
     </c:if>
   </div>
   <div class="container" id="catalogue">
-    <form action="/catalogue" method="get">
+    <form action="<c:url value='/catalogue'/>" method="get">
         <input type="text" name="keyword" placeholder="Search auctions">
         <button type="submit">Search</button>
     </form>
@@ -29,7 +29,7 @@
         <p>No items found.</p>
     </c:if>
     <c:forEach var="item" items="${items}">
-        <form action="/auction/${item.itemId}" method="get">
+        <form action="<c:url value='/auction/${item.itemId}'/>" method="get">
             <p>${item.name}</p>
             <p>${item.description}</p>
             <p>Start Price: ${item.startPrice}</p>
@@ -37,7 +37,7 @@
             <button type="submit">Bid on ${item.name}</button>
         </form>
     </c:forEach>
-    <a href="/catalogue/new">
+    <a href="<c:url value='/catalogue/new'/>">
         <button>Create New Auction</button>
     </a>
   </div>

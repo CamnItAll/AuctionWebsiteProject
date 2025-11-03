@@ -13,7 +13,7 @@
 <body style="text-align:center;">
     <h1>Create New Auction</h1>
 
-    <form action="/auction/create" method="POST">
+    <form action="<c:url value='/auction/create'/>" method="POST">
         <label for="name">Item Name:</label>
         <input type="text" id="name" name="name" required><br><br>
 
@@ -43,6 +43,6 @@
         <button type="submit">Create Auction</button>
     </form><br>
 
-    <a href="/catalogue">Back to Catalog</a>
+    <a href="<c:url value='/catalogue'/>">Back to Catalog</a>
 </body>
 </html>

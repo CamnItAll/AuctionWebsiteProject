@@ -79,7 +79,7 @@
         <button type="submit">Register</button>
       </form:form><br>
 
-      <a href="/login">Back to Login</a>
+      <a href="<c:url value='/login'/>">Back to Login</a>
     </div>
   </body>
 </html>

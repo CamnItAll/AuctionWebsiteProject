@@ -75,10 +75,11 @@
 			<scope>test</scope>
 		</dependency>
 		
-		<dependency>
+		<!-- For embedded Tomcat; comment out before using mvn clean package -->
+		<!--<dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-jasper</artifactId>
-        </dependency>
+        </dependency>!-->
 
         <dependency>
     		<groupId>jakarta.servlet</groupId>
