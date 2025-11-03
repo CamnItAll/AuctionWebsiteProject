@@ -16,6 +16,10 @@
     <p>Current Price: $${item.currentPrice}</p>
     <p>Time Remaining: ${item.endDate}</p>
 
+    <p>Can Bid: ${canBid}</p>
+    <p>Can Buy Now: ${canBuyNow}</p>
+    <p>Is Owner: ${isOwner}</p>
+
     <c:if test="${canBid}">
         <form action="/auction/placeBid/${item.itemId}" method="post">
             <input type="number" name="bidAmount" min="${auction.currentPrice}" step="0.01" required>

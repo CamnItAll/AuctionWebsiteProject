@@ -33,15 +33,13 @@ public class AuctionController {
     @Autowired
     private AuctionService auctionService;
 
-    @GetMapping("/auction/{id}")
-    public String viewAuction(@PathVariable int id, Model model) {
-        Item item = auctionService.findByAuctionId(id);  // Get auction item details
+    @GetMapping("/auction/{itemId}")
+    public String viewAuction(@PathVariable int itemId, Model model) {
+        Item item = auctionService.findByAuctionId(itemId);  // Get auction item details
 
         // Get the current authenticated user
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User currentUser = (authentication != null && authentication.getPrincipal() instanceof User) 
-                             ? (User) authentication.getPrincipal()
-                             : null;
+        User currentUser = userRepo.findByUsername(authentication.getName());
 
         // Add item and user info to the model
         model.addAttribute("item", item);
@@ -51,18 +49,24 @@ public class AuctionController {
         model.addAttribute("canBid", canPlaceBid(currentUser, item));
         model.addAttribute("canBuyNow", canBuyNow(currentUser, item));
         model.addAttribute("isOwner", currentUser != null && currentUser.equals(item.getOwner()));
+        
+        System.out.println("User: " + currentUser);
+        System.out.println("Item Owner: " + item.getOwner());
+        System.out.println("End Date: " + item.getEndDate());
+        System.out.println("Current Time: " + LocalDateTime.now());
+        System.out.println("Auction Type: " + item.getAuctionType());
 
         return "auction";  // JSP view name
     }
 
     private boolean canPlaceBid(User user, Item item) {
         // Example logic: User can place a bid if they're not the owner and the auction is still open
-        return user != null && !user.equals(item.getOwner()) && item.getEndDate().isAfter(LocalDateTime.now());
+        return user != null && !user.equals(item.getOwner()) && item.getAuctionType().equals("forward") && item.getEndDate().isAfter(LocalDateTime.now());
     }
 
     private boolean canBuyNow(User user, Item item) {
         // Example logic: User can buy now if the auction type is "forward"
-        return user != null && item.getAuctionType().equals("forward");
+        return user != null && !user.equals(item.getOwner()) && item.getAuctionType().equals("dutch");
     }
 
     @PostMapping("/auction/placeBid/{itemId}")
