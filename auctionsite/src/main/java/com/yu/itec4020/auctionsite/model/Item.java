@@ -54,6 +54,9 @@ public class Item {
     @ManyToOne
     @JoinColumn(name = "highest_bidder_id", nullable = true)
     private User highestBidder; // Highest bidder in a forward auction
+    
+    @OneToOne(mappedBy = "item")
+    private Payment payment;
 	
 	// ---------- Getters and Setters ----------
     public Long getItemId() { return id; }
@@ -96,4 +99,7 @@ public class Item {
     
     public User getHighestBidder() { return highestBidder; }
     public void setHighestBidder(User highestBidder) { this.highestBidder = highestBidder; }
+    
+    public Payment getPayment() { return payment; }
+    public void setPayment(Payment payment) { this.payment = payment; }
 }

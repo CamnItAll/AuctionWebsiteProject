@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS items (
     FOREIGN KEY (owner_id) REFERENCES users(id),
     FOREIGN KEY (highest_bidder_id) REFERENCES users(id)
 	);
+ALTER TABLE items DROP INDEX name;
 	
 CREATE TABLE IF NOT EXISTS bids (
 	id BIGINT PRIMARY KEY AUTO_INCREMENT,

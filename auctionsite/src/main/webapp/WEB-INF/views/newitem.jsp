@@ -38,8 +38,8 @@
         <label for="expeditedShippingPrice">Expedited Shipping Price:</label>
         <form:input path="expeditedShippingPrice" id="expeditedShippingPrice" type="number" step="0.01" required="true"/><br><br>
 
-        <label for="shippingDays">Shipping Days:</label>
-        <form:input path="shippingDays" id="shippingDays" type="number" required="true"/><br><br>
+        <label for="shippingDays">Shipping Days (must be minimum 5 days):</label>
+        <form:input path="shippingDays" id="shippingDays" type="number" min='5' required="true"/><br><br>
 
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 

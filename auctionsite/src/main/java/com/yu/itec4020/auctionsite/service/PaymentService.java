@@ -18,8 +18,16 @@ public class PaymentService {
         return paymentRepo.findById(paymentId);
     }
 
-    @Transactional
-    public Payment createPayment(Payment payment) {
-        return paymentRepo.save(payment);
-    }
+	@Transactional
+	public Payment createPayment(Payment payment) {
+	    Payment saved = paymentRepo.save(payment);
+
+	    // Check the Item now knows it has a Payment
+	    Item item = saved.getItem();
+	    if (item != null) {
+	        item.setPayment(saved);
+	    }
+
+	    return saved;
+	}
 }

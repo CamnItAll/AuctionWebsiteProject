@@ -14,7 +14,7 @@ public class Payment {
     @JoinColumn(name = "buyer_id", nullable = false)
     private User buyer;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "item_id", nullable = false)
     private Item item;
     

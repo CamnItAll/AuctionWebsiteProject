@@ -33,7 +33,7 @@
                     </c:when>
                     <c:otherwise>
                         <fmt:formatNumber value="${item.shippingPrice}" type="currency"/><br>
-                        <b>Expedited:</b> No ${payment.expedited}
+                        <b>Expedited:</b> No
                     </c:otherwise>
             </c:choose></td>
         </tr>
@@ -50,7 +50,14 @@
         </tr>
     </table>
     <h3>Shipping Details</h3>
-    <p>This item will be shipped in ${item.shippingDays} days.</p>
+    <c:choose>
+        <c:when test="${payment.expedited}">
+            <p>This item will be shipped in ${item.shippingDays} days.</p>
+        </c:when>
+        <c:otherwise>
+            <p>This item will be shipped in 2 days.</p>
+        </c:otherwise>
+    </c:choose>
 
     <div class="container">
       <a href="<c:url value='/catalogue'/>"><button type="button">Back to Catalog</button></a>
