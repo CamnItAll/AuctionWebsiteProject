@@ -9,7 +9,7 @@ public class Bid {
 	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     
     @ManyToOne
     @JoinColumn(name = "item_id", nullable = false)
@@ -26,8 +26,8 @@ public class Bid {
     private LocalDateTime bidDate = LocalDateTime.now();
     
     // ---------- Getters and Setters ----------
-    public Integer getBidId() { return id; }
-    public void setBidId(Integer id) { this.id = id; }
+    public Long getBidId() { return id; }
+    public void setBidId(Long id) { this.id = id; }
     
     public Item getItem() { return item; }
     public void setItem(Item item) { this.item = item; }

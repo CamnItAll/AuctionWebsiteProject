@@ -12,14 +12,15 @@ public class CatalogueService {
     private ItemRepository itemRepo;
 	
 	public List<Item> searchAuctions(String keyword) {
-		if (keyword == "")
-			return itemRepo.findByNameContaining("##");
-		else
-			return itemRepo.findByNameContaining(keyword);
+		return itemRepo.findByNameContaining(keyword);
     }
 	
 	public Item findByAuctionId(int itemId) {
         return itemRepo.findById(itemId);
+    }
+	
+	public List<Item> findAllItems() {
+        return itemRepo.findAll();
     }
 	
 	public Item saveItem (Item item) {

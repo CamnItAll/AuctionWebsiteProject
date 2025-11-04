@@ -11,7 +11,7 @@ public class Item {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 	
 	@Column(nullable = false)
     private String name;
@@ -38,6 +38,9 @@ public class Item {
 	@Column(name = "auction_type")
 	private AuctionType auctionType; // "forward" or "dutch"
 	
+	@Column(name = "shipping_price", nullable = false)
+    private Double shippingPrice;
+	
 	@Column(name = "expedited_shipping_price", nullable = false)
     private Double expeditedShippingPrice;
     
@@ -53,8 +56,8 @@ public class Item {
     private User highestBidder; // Highest bidder in a forward auction
 	
 	// ---------- Getters and Setters ----------
-    public Integer getItemId() { return id; }
-    public void setItemId(Integer id) { this.id = id; }
+    public Long getItemId() { return id; }
+    public void setItemId(Long id) { this.id = id; }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
@@ -77,8 +80,10 @@ public class Item {
     public void setEndDate(LocalDateTime endDate) { this.endDate = endDate; }
     
     public AuctionType getAuctionType() { return auctionType; }
-
     public void setAuctionType(AuctionType auctionType) { this.auctionType = auctionType; }
+    
+    public Double getShippingPrice() { return shippingPrice; }
+    public void setShippingPrice(Double shippingPrice) { this.shippingPrice = shippingPrice; }
     
     public Double getExpeditedShippingPrice() { return expeditedShippingPrice; }
     public void setExpeditedShippingPrice(Double expeditedShippingPrice) { this.expeditedShippingPrice = expeditedShippingPrice; }

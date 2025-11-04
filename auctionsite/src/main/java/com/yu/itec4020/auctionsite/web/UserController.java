@@ -16,9 +16,6 @@ public class UserController {
     private UserService userService;
 
     @Autowired
-    private SecurityService securityService;
-
-    @Autowired
     private UserValidator userValidator;
 
     @GetMapping("/registration")
@@ -35,7 +32,6 @@ public class UserController {
             return "register";
         }
         userService.save(userForm);
-        securityService.autoLogin(userForm.getUsername(), userForm.getPassword());
 
         return "redirect:/login?registered=true";
     }
@@ -72,19 +68,16 @@ public class UserController {
     public String processResetPassword(
     		@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("passwordConfirm") String passwordConfirm,
             Model model) {
-
         if (!password.equals(passwordConfirm)) {
             model.addAttribute("error", "Passwords do not match.");
             model.addAttribute("username", username);
             return "resetpass";
         }
-
         User user = userService.findByUsername(username);
         if (user == null) {
             model.addAttribute("error", "Invalid username.");
             return "forgotpass";
         }
-
         user.setPassword(password);
         userService.save(user); // This re-hashes via BCrypt in your UserServiceImpl
         model.addAttribute("message", "Password successfully updated! Please log in.");
@@ -99,6 +92,6 @@ public class UserController {
 
     @GetMapping("/catalogue")
     public String catalogue(Model model) {
-        return "catalogue";
+        return "redirect:/catalogue/";
     }
 }

@@ -1,25 +1,19 @@
 package com.yu.itec4020.auctionsite.web;
 
-import java.security.Principal;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.yu.itec4020.auctionsite.model.User;
 import com.yu.itec4020.auctionsite.model.enums.AuctionType;
 import com.yu.itec4020.auctionsite.model.Item;
-import com.yu.itec4020.auctionsite.model.Bid;
 import com.yu.itec4020.auctionsite.repo.UserRepository;
-import com.yu.itec4020.auctionsite.repo.ItemRepository;
-import com.yu.itec4020.auctionsite.repo.BidRepository;
 import com.yu.itec4020.auctionsite.service.AuctionService;
 import com.yu.itec4020.auctionsite.service.CatalogueService;
 
@@ -51,7 +45,6 @@ public class AuctionController {
 
         // Add flags like canBid, canBuyNow, isOwner based on the auction item and the user
         if (item.getEndDate().isAfter(LocalDateTime.now()) && item.getAuctionStatus().equals("OPEN")) {
-        	System.out.println("OK!");
 	        if (item.getAuctionType().equals(AuctionType.FORWARD)) {
 	        	model.addAttribute("canBid", currentUser != null && !currentUser.equals(item.getOwner()));
 	        	model.addAttribute("isOwnerF", currentUser != null && currentUser.equals(item.getOwner()));
@@ -68,34 +61,52 @@ public class AuctionController {
     }
 
     @PostMapping("/placeBid/{itemId}")
-    public String placeBid(@PathVariable int itemId, Model model, @RequestParam Double bidAmount) {
-    	authentication = SecurityContextHolder.getContext().getAuthentication();
-    	User currentUser = userRepo.findByUsername(authentication.getName());
-    	Item item = auctionService.findByAuctionId(itemId);
-    	if (item.getAuctionType().equals(AuctionType.FORWARD) && bidAmount > item.getCurrentPrice())
-    		auctionService.placeBid(itemId, bidAmount, currentUser);
-    	else {
-    	}
+    public String placeBid(@PathVariable int itemId,
+                           @RequestParam Double bidAmount,
+                           RedirectAttributes redirectAttributes) {
+        authentication = SecurityContextHolder.getContext().getAuthentication();
+        User currentUser = userRepo.findByUsername(authentication.getName());
+        Item item = auctionService.findByAuctionId(itemId);
+
+        if (item.getAuctionType().equals(AuctionType.FORWARD) && bidAmount > item.getCurrentPrice()) {
+            auctionService.placeBid(itemId, bidAmount, currentUser);
+            redirectAttributes.addFlashAttribute("successMessage", "Your bid was placed successfully!");
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "Your bid must be higher than the current price.");
+        }
+
         return "redirect:/auction/" + itemId;
     }
-    
+
     @PostMapping("/pay/{itemId}")
-    public String payForAuction(@PathVariable int itemId) {
-    	authentication = SecurityContextHolder.getContext().getAuthentication();
-    	User currentUser = userRepo.findByUsername(authentication.getName());
+    public String payForAuction(@PathVariable int itemId, RedirectAttributes redirectAttributes) {
+        authentication = SecurityContextHolder.getContext().getAuthentication();
+        User currentUser = userRepo.findByUsername(authentication.getName());
         Item item = auctionService.findByAuctionId(itemId);
-    	if (item.getAuctionType().equals(AuctionType.DUTCH)) {
-    		auctionService.placeBid(itemId, item.getCurrentPrice(), currentUser);
-    	} else {
-    	}
-        //double totalAmount = item.getStartPrice() + item.getExpeditedShippingPrice();
-        //auctionService.makePayment(itemId, currentUser, totalAmount);
+
+        if (item.getAuctionType().equals(AuctionType.DUTCH)) {
+            auctionService.placeBid(itemId, item.getCurrentPrice(), currentUser);
+            redirectAttributes.addFlashAttribute("successMessage", "Purchase successful! Be sure to pay up soon.");
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "Payment is only valid for Dutch auctions.");
+        }
+
         return "redirect:/auction/" + itemId;
     }
 
     @PostMapping("/updateDutchPrice/{itemId}")
-    public String updateDutchAuctionPrice(@PathVariable int itemId, @RequestParam Double newPrice) {
-        auctionService.updateDutchAuctionPrice(itemId, newPrice);
+    public String updateDutchAuctionPrice(@PathVariable int itemId,
+                                          @RequestParam Double newPrice,
+                                          RedirectAttributes redirectAttributes) {
+        Item item = auctionService.findByAuctionId(itemId);
+
+        if (newPrice < item.getCurrentPrice()) {
+            auctionService.updateDutchAuctionPrice(itemId, newPrice);
+            redirectAttributes.addFlashAttribute("successMessage", "Price updated successfully!");
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "Your new price must be lower than the current price.");
+        }
+
         return "redirect:/auction/" + itemId;
     }
 }

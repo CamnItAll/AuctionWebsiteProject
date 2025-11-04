@@ -26,58 +26,96 @@
             <p>This auction is over.</p>
         </c:otherwise>
     </c:choose>
-    <p>Current Price: <fmt:formatNumber value="${item.currentPrice}" type="currency"/></p>
+    <table border="1" align="center" cellpadding="8">
+        <tr>
+            <th>Current Price</th>
+            <td><fmt:formatNumber value="${item.currentPrice}" type="currency"/></td>
+        </tr>
+        <tr>
+            <th>Latest Bidder</th>
+            <td><c:choose>
+                    <c:when test="${item.highestBidder.username != null}">${item.highestBidder.username}</c:when>
+                    <c:otherwise>N/A</c:otherwise>
+            </c:choose></td>
+        </tr>
+        <tr>
+            <th>Auction Type</th>
+            <td>${item.auctionType}</td>
+        </tr>
+    </table><br>
 
     <c:if test="${canBid}">
         <form action="<c:url value='/auction/placeBid/${item.itemId}'/>" method="post">
-            <p>Latest Bidder: ${item.highestBidder.username}</p>
-            <p>Auction Type: ${item.auctionType}</p>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-            <input type="number" name="bidAmount" min="${auction.currentPrice}" step="0.01" required>
-            <button type="submit">Place Bid</button>
+            <table border="1" align="center" cellpadding="8">
+                <tr>
+                    <th>Place Your Bid</th>
+                    <td><input type="number" name="bidAmount" min="${auction.currentPrice}" step="0.01" required></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><button type="submit">Place Bid</button></td>
+                </tr>
+            </table>
         </form>
     </c:if>
     <c:if test="${canBuyNow}">
         <form action="<c:url value='/auction/pay/${item.itemId}'/>" method="post">
-            <p>Latest Bidder: ${item.highestBidder.username}</p>
-            <p>Auction Type: ${item.auctionType}</p>
-            <p>Time Remaining: ${item.endDate}</p>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-            <button type="submit">Buy Now</button>
+            <table border="1" align="center" cellpadding="8">
+                <tr>
+                    <th colspan="2">Buy Now</th>
+                </tr>
+                <tr>
+                    <td colspan="2"><button type="submit">Buy Now</button></td>
+                </tr>
+            </table>
         </form>
     </c:if>
     <c:if test="${isOwnerD}">
         <form action="<c:url value='/auction/updateDutchPrice/${item.itemId}'/>" method="post">
-            <p>Latest Bidder: ${item.highestBidder.username}</p>
-            <p>Auction Type: ${item.auctionType}</p>
-            <p>Time Remaining: ${item.endDate}</p>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-            <input type="number" name="newPrice" value="${item.startPrice}" step="0.01" required>
-            <button type="submit">Update Dutch Auction Price</button>
+            <table border="1" align="center" cellpadding="8">
+                <tr>
+                    <th>Update Dutch Price</th>
+                    <td><input type="number" name="newPrice" value="${item.startPrice}" step="0.01" required></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><button type="submit">Update Price</button></td>
+                </tr>
+            </table>
         </form>
     </c:if>
     <c:if test="${isOwnerF}">
-        <p>Latest Bidder: ${item.highestBidder.username}</p>
-        <p>Auction Type: ${item.auctionType}</p>
-        <p>Time Remaining: ${item.endDate}</p>
-        <p>This is your forward auction.</p>
+        <table border="1" align="center" cellpadding="8">
+            <tr><td colspan="2">This is your forward auction.</td></tr>
+        </table>
     </c:if>
-    
     <c:if test="${auctionEnded}">
-        <p>Latest Bidder: ${item.highestBidder.username}</p>
-        <p>Auction Type: ${item.auctionType}</p>
-        <p>Only the highest bidder can make their payment.</p>
+        <table border="1" align="center" cellpadding="8">
+            <tr><td>Only the highest bidder can make their payment.</td></tr>
+        </table>
     </c:if>
     <c:if test="${auctionEndedBuy}">
         <form action="<c:url value='/payment/${item.itemId}/pay'/>" method="post">
-            <p>Latest Bidder: ${item.highestBidder.username}</p>
-            <p>Auction Type: ${item.auctionType}</p>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-            <button type="submit">Make Your Payment</button>
+            <table border="1" align="center" cellpadding="8">
+                <tr><td><button type="submit">Make Your Payment</button></td></tr>
+            </table>
         </form>
     </c:if><br>
 
-    <a href="<c:url value='/catalogue'/>">Back to Catalog</a>
+    <c:if test="${not empty successMessage}">
+        <div style="color: green; font-weight: bold;">
+            ${successMessage}
+        </div><br>
+    </c:if>
+    <c:if test="${not empty errorMessage}">
+        <div style="color: red; font-weight: bold;">
+            ${errorMessage}
+        </div><br>
+    </c:if>
+
+    <a href="<c:url value='/catalogue'/>"><button type="button">Back to Catalog</button></a>
 
     <!--Script for countdown timer-->
     <script>

@@ -4,7 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<c:set var="iid" value="${empty item.itemId ? item.id : item.itemId}" />
 
 <!DOCTYPE html>
 <html lang="en">
@@ -16,15 +15,40 @@
     <h2>Payment Processed</h2>
 
     <h3>Receipt</h3>
-    <p><b>Item:</b> ${item.name}</p>
-    <p><b>Final Bid:</b>
-    <fmt:formatNumber value="${item.currentPrice}" type="currency"/>
-    </p>
-    <p><b>Shipping Price:</b>
-    </p>
-    <p><b>Total Amount:</b>
-    </p>
-
+    <table border="1" align="center" cellpadding="8">
+        <tr>
+            <th>Item</th>
+            <td>${item.name}</td>
+        </tr>
+        <tr>
+            <th>Final Bid</th>
+            <td><fmt:formatNumber value="${item.currentPrice}" type="currency"/></td>
+        </tr>
+        <tr>
+            <th>Shipping Price</th>
+            <td><c:choose>
+                    <c:when test="${payment.expedited}">
+                        <fmt:formatNumber value="${item.shippingPrice + item.expeditedShippingPrice}" type="currency"/><br>
+                        <b>Expedited:</b> Yes
+                    </c:when>
+                    <c:otherwise>
+                        <fmt:formatNumber value="${item.shippingPrice}" type="currency"/><br>
+                        <b>Expedited:</b> No ${payment.expedited}
+                    </c:otherwise>
+            </c:choose></td>
+        </tr>
+        <tr>
+            <th>Total Amount</th>
+            <td><c:choose>
+                    <c:when test="${payment.expedited}">
+                        <fmt:formatNumber value="${item.currentPrice + item.shippingPrice + item.expeditedShippingPrice}" type="currency"/>
+                    </c:when>
+                    <c:otherwise>
+                        <fmt:formatNumber value="${item.currentPrice + item.shippingPrice}" type="currency"/>
+                    </c:otherwise>
+            </c:choose></td>
+        </tr>
+    </table>
     <h3>Shipping Details</h3>
     <p>This item will be shipped in ${item.shippingDays} days.</p>
 

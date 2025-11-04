@@ -32,17 +32,20 @@
         <label for="endDate">End Date:</label>
         <form:input path="endDate" id="endDate" type="datetime-local" required="true"/><br><br>
 
+        <label for="shippingPrice">Shipping Price:</label>
+        <form:input path="shippingPrice" id="shippingPrice" type="number" step="0.01" required="true"/><br><br>
+
         <label for="expeditedShippingPrice">Expedited Shipping Price:</label>
-        <form:input path="expeditedShippingPrice" id="expeditedShippingPrice" type="number" step="0.01"/><br><br>
+        <form:input path="expeditedShippingPrice" id="expeditedShippingPrice" type="number" step="0.01" required="true"/><br><br>
 
         <label for="shippingDays">Shipping Days:</label>
-        <form:input path="shippingDays" id="shippingDays" type="number"/><br><br>
+        <form:input path="shippingDays" id="shippingDays" type="number" required="true"/><br><br>
 
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
         <button type="submit">Create Auction</button>
     </form:form><br>
 
-    <a href="<c:url value='/catalogue'/>">Back to Catalog</a>
+    <a href="<c:url value='/catalogue/'/>"><button type="button">Back to Catalog</button></a>
 </body>
 </html>

@@ -33,9 +33,18 @@ public class CatalogueController {
 	@Autowired
     private AuctionService auctionService;
 	
-	@GetMapping("/")
-    public String viewCatalog(@RequestParam(value = "keyword", required = false) String keyword, Model model) {
-        List<Item> items = (keyword != null) ? catalogueService.searchAuctions(keyword) : catalogueService.searchAuctions("");
+	// 1️⃣ When visiting /catalogue/ (no keyword)
+    @GetMapping("/")
+    public String viewAllItems(Model model) {
+        List<Item> items = catalogueService.findAllItems();
+        model.addAttribute("items", items);
+        return "catalogue";
+    }
+
+    // 2️⃣ When visiting /catalogue/?keyword=...
+    @GetMapping(params = "keyword")
+    public String searchItems(@RequestParam("keyword") String keyword, Model model) {
+        List<Item> items = catalogueService.searchAuctions(keyword);
         model.addAttribute("items", items);
         return "catalogue";
     }

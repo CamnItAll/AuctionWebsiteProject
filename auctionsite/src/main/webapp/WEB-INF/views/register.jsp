@@ -19,68 +19,47 @@
 
         <spring:bind path="username">
           <label>Username</label>
-          <form:input type="text" path="username" placeholder="Username" autofocus="true"/>
+          <form:input type="text" path="username" placeholder="Username" autofocus="true"/><br>
           <form:errors path="username" cssClass="error"/>
-        </spring:bind><br><br>
+        </spring:bind><br>
 
         <spring:bind path="password">
           <label>Password</label>
           <form:input type="password" path="password" placeholder="Password"/><br>
           <form:errors path="password" cssClass="error"/>
-        </spring:bind><br><br>
+        </spring:bind><br>
 
         <spring:bind path="passwordConfirm">
           <label>Confirm Password</label>
-          <form:input type="password" path="passwordConfirm" placeholder="Confirm Password"/>
+          <form:input type="password" path="passwordConfirm" placeholder="Confirm Password"/><br>
           <form:errors path="passwordConfirm" cssClass="error"/>
-        </spring:bind><br><br>
+        </spring:bind><br>
 
-        <spring:bind path="firstName">
-          <label>First Name</label>
-          <form:input type="text" path="firstName" placeholder="First Name"/>
-          <form:errors path="firstName" cssClass="error"/>
-        </spring:bind><br><br>
+        <label>First Name</label>
+        <form:input type="text" path="firstName" placeholder="First Name"/><br><br>
 
-        <spring:bind path="lastName">
-          <label>Last Name</label>
-          <form:input type="text" path="lastName" placeholder="Last Name"/>
-          <form:errors path="lastName" cssClass="error"/>
-        </spring:bind><br><br>
+        <label>Last Name</label>
+        <form:input type="text" path="lastName" placeholder="Last Name"/><br><br>
 
-        <spring:bind path="addressStreet">
-          <label>Street</label>
-          <form:input type="text" path="addressStreet" placeholder="Street Name"/>
-          <form:errors path="addressStreet" cssClass="error"/>
-        </spring:bind><br><br>
+        <label>Street</label>
+        <form:input type="text" path="addressStreet" placeholder="Street Name"/><br><br>
 
-        <spring:bind path="addressNo">
-          <label>Street Number</label>
-          <form:input type="text" path="addressNo" placeholder="House/Apartment Number"/>
-          <form:errors path="addressNo" cssClass="error"/>
-        </spring:bind><br><br>
+        <label>Street Number</label>
+        <form:input type="text" path="addressNo" placeholder="House/Apartment Number"/><br><br>
 
-        <spring:bind path="city">
-          <label>City</label>
-          <form:input type="text" path="city" placeholder="City"/>
-          <form:errors path="city" cssClass="error"/>
-        </spring:bind><br><br>
+        <label>City</label>
+        <form:input type="text" path="city" placeholder="City"/><br><br>
 
-        <spring:bind path="country">
-          <label>Country</label>
-          <form:input type="text" path="country" placeholder="Country"/>
-          <form:errors path="country" cssClass="error"/>
-        </spring:bind><br><br>
+        <label>Country</label>
+        <form:input type="text" path="country" placeholder="Country"/><br><br>
 
-        <spring:bind path="postalCode">
-          <label>Postal Code</label>
-          <form:input type="text" path="postalCode" placeholder="Postal Code"/>
-          <form:errors path="postalCode" cssClass="error"/>
-        </spring:bind><br><br>
+        <label>Postal Code</label>
+        <form:input type="text" path="postalCode" placeholder="Postal Code" maxlength="7"/><br><br>
 
         <button type="submit">Register</button>
       </form:form><br>
 
-      <a href="<c:url value='/login'/>">Back to Login</a>
+      <a href="<c:url value='/login'/>"><button type="button">Back to Login</button></a>
     </div>
   </body>
 </html>

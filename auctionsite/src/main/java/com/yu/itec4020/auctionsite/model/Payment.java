@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     
     @ManyToOne
     @JoinColumn(name = "buyer_id", nullable = false)
@@ -33,12 +33,15 @@ public class Payment {
     @Column(nullable = false)
     private String cvv;
     
+	@Column(name = "is_expedited", nullable = false)
+	private boolean expedited;
+    
     @Column(name = "payment_date", nullable = false)
     private LocalDateTime paymentDate = LocalDateTime.now();
 
     // ---------- Getters and Setters ----------
-    public Integer getPaymentId() { return id; }
-    public void setPaymentId(Integer id) { this.id = id; }
+    public Long getPaymentId() { return id; }
+    public void setPaymentId(Long id) { this.id = id; }
     
     public User getBuyer() { return buyer; }
     public void setBuyer(User buyer) { this.buyer = buyer; }
@@ -61,6 +64,10 @@ public class Payment {
     public String getCvv() { return cvv; }
     public void setCvv(String cvv) { this.cvv = cvv; }
     
+    public boolean isExpedited() { return expedited; }
+    public void setExpedited(boolean expedited) { this.expedited = expedited; }
+    
     public LocalDateTime getPaymentDate() { return paymentDate; }
+    public void setPaymentDate(LocalDateTime paymentDate) { this.paymentDate = paymentDate; }
 }
 

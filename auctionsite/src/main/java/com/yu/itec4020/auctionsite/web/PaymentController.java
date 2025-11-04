@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.yu.itec4020.auctionsite.model.Item;
@@ -34,13 +35,11 @@ public class PaymentController {
         Item item = itemRepo.findById(itemId);
         if (item == null) {
             ra.addFlashAttribute("error", "Item not found.");
-            System.out.println("Screwed up at 1");
             return "redirect:/catalogue";
         }
         double price = item.getCurrentPrice();
         if (Double.isNaN(price) || price <= 0.0) {
             ra.addFlashAttribute("error", "Final price not set.");
-            System.out.println("Screwed up at 2");
             return "redirect:/catalogue";
         }
         model.addAttribute("item", item);
@@ -54,12 +53,11 @@ public class PaymentController {
         Item item = itemRepo.findById(itemId);
         if (item == null) {
             ra.addFlashAttribute("error", "Item not found.");
-            System.out.println("Screwed up at 3");
             return "redirect:/catalogue";
         }
 
-        //Long currentUserId = getCurrentUserIdOrNull();
-        if (item.getHighestBidder() == null || item.getHighestBidder().getId() == null) {
+        Long currentUserId = getCurrentUserIdOrNull();
+        if (item.getHighestBidder() == null || item.getHighestBidder().getId() == null ) {
             ra.addFlashAttribute("error", "Only the winner can pay for this item.");
             System.out.println("Screwed up at 4");
             return "redirect:/catalogue";
@@ -82,36 +80,35 @@ public class PaymentController {
         
         payment.setBuyer(currentUser);
         payment.setItem(item);
-        payment.setAmount(item.getCurrentPrice());
+        if (payment.isExpedited())
+        	payment.setAmount(item.getCurrentPrice() + item.getShippingPrice() + item.getExpeditedShippingPrice());
+        else
+        	payment.setAmount(item.getCurrentPrice() + item.getShippingPrice());
         paymentService.createPayment(payment);
 
-        ra.addFlashAttribute("paymentId", payment.getPaymentId());
-        return "redirect:/payment/" + itemId + "/receipt";
+        return "redirect:/payment/" + itemId + "/receipt?paymentId=" + payment.getPaymentId();
     }
-
    
     @GetMapping("/{itemId}/receipt")
-    public String showReceipt(@PathVariable("itemId") int itemId, Model model, RedirectAttributes ra) {
+    public String showReceipt(@PathVariable("itemId") int itemId, @RequestParam("paymentId") Long paymentId, Model model, RedirectAttributes ra) {
         Item item = itemRepo.findById(itemId);
         if (item == null) {
             ra.addFlashAttribute("error", "Item not found.");
-            System.out.println("Screwed up at 5");
+            return "redirect:/catalogue";
+        }
+        Payment payment = paymentService.findByPaymentId(paymentId.intValue());
+        if (payment == null) {
+            ra.addFlashAttribute("error", "Payment not found.");
             return "redirect:/catalogue";
         }
 
-        int finalPriceCents      = dollarsToCents(item.getCurrentPrice());
-        int regularShippingCents = 0;
-        int expeditedCents       = dollarsToCents(item.getExpeditedShippingPrice());
-
         model.addAttribute("item", item);
-      
-        return "receipt"; 
+        model.addAttribute("payment", payment);
+
+        return "receipt";
     }
 
     // --- helpers ---
     private Long getCurrentUserIdOrNull() { return 1L; } 
     private boolean isBlank(String s) { return s == null || s.trim().isEmpty(); }
-    private int dollarsToCents(double dollars) {
-        return (int) Math.round(dollars * 100.0);
-    }
 }
