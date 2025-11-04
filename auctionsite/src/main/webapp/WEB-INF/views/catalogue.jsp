@@ -33,7 +33,7 @@
         <tr>
             <th>Item Name</th>
             <th style="width: 300px;">Description</th>
-            <th>Current Price</th>
+            <th>Latest Price</th>
             <th>Latest Bidder</th>
             <th>Auction Type</th>
             <th>Time Left</th>
@@ -120,4 +120,5 @@
     })();
     </script>
 </body>
+
 </html>
