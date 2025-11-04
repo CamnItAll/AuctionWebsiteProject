@@ -25,10 +25,16 @@
             <td><fmt:formatNumber value="${item.currentPrice}" type="currency"/></td>
         </tr>
         <tr>
+            <th>Bought By</th>
+            <td>${user.username}</td>
+        </tr>
+        <tr>
             <th>Shipping Price</th>
             <td><c:choose>
                     <c:when test="${payment.expedited}">
-                        <fmt:formatNumber value="${item.shippingPrice + item.expeditedShippingPrice}" type="currency"/><br>
+                        <fmt:formatNumber value="${item.shippingPrice}" type="currency"/> 
+                        + <fmt:formatNumber value="${item.expeditedShippingPrice}" type="currency"/> 
+                        = <fmt:formatNumber value="${item.shippingPrice + item.expeditedShippingPrice}" type="currency"/><br>
                         <b>Expedited:</b> Yes
                     </c:when>
                     <c:otherwise>
@@ -50,14 +56,19 @@
         </tr>
     </table>
     <h3>Shipping Details</h3>
-    <c:choose>
-        <c:when test="${payment.expedited}">
-            <p>This item will be shipped in ${item.shippingDays} days.</p>
-        </c:when>
-        <c:otherwise>
-            <p>This item will be shipped in 2 days.</p>
-        </c:otherwise>
-    </c:choose>
+    <table border="1" align="center" cellpadding="8">
+        <tr>
+            <th>Shipping Location</th> 
+            <td>${user.addressNo} ${user.addressStreet}, ${user.city}, ${user.country}, ${user.postalCode}</td>
+        </tr>
+        <tr>
+            <th>Shipping Period</th>
+            <td><c:choose>
+                <c:when test="${payment.expedited}">This item will be shipped in 2 days.</c:when>
+                <c:otherwise>This item will be shipped in ${item.shippingDays} days.</p></c:otherwise>
+            </c:choose></td>
+        </tr>
+    </table><br>
 
     <div class="container">
       <a href="<c:url value='/catalogue'/>"><button type="button">Back to Catalog</button></a>

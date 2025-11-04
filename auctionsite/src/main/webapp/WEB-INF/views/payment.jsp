@@ -30,8 +30,8 @@
         <tr>
             <th>Shipping</th>
             <td>
-                Regular <fmt:formatNumber value="${item.shippingPrice}" type="currency"/> |
-                Expedited +<fmt:formatNumber value="${item.expeditedShippingPrice}" type="currency"/>
+                Regular: <fmt:formatNumber value="${item.shippingPrice}" type="currency"/>  | 
+                with Expedited: +<fmt:formatNumber value="${item.expeditedShippingPrice}" type="currency"/>
             </td>
         </tr>
     </table><br>
@@ -39,7 +39,7 @@
         <div style="color:red">${error}</div>
     </c:if>
     <c:if test="${not empty formError}">
-        <div style="color:red">${formError}</div>
+        <div>${formError}</div>
     </c:if><br>
 
     <form:form action="${contextPath}/payment/${item.itemId}/pay" method="post" modelAttribute="paymentForm">

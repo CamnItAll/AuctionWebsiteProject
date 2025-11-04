@@ -52,56 +52,65 @@ public class PaymentController {
     public String submitPay(@ModelAttribute("paymentForm") Payment payment, @PathVariable("itemId") int itemId, RedirectAttributes ra, Model model, Principal principal) {
         Item item = itemRepo.findById(itemId);
         if (item == null) {
-            ra.addFlashAttribute("error", "Item not found.");
-            return "redirect:/catalogue";
+            ra.addFlashAttribute("errorMessage", "Item not found.");
+            return "redirect:/auction/" + itemId;
         }
 
         Long currentUserId = getCurrentUserIdOrNull();
-        if (item.getHighestBidder() == null || item.getHighestBidder().getId() == null ) {
-            ra.addFlashAttribute("error", "Only the winner can pay for this item.");
+        if (item.getHighestBidder() == null || item.getHighestBidder().getId() == null || item.getHighestBidder().getId().equals(currentUserId)) {
+        	ra.addFlashAttribute("errorMessage", "Only the winner can pay for this item.");
+            System.out.println(!item.getHighestBidder().getId().equals(currentUserId));
             System.out.println("Screwed up at 4");
-            return "redirect:/catalogue";
+            return "redirect:/auction/" + itemId;
         }
-
+        
+        model.addAttribute("item", item);
+        model.addAttribute("payment", payment);
+        
         // simple form check
         if (isBlank(payment.getCardName())    ||
             isBlank(payment.getCardNum())     ||
             isBlank(payment.getExpireDate())  ||
             isBlank(payment.getCvv())) {
 
-            model.addAttribute("item", item);
-            model.addAttribute("payment", payment);
             model.addAttribute("formError", "Please fill all card fields.");
             return "payment";
         }
-
-        String username = principal.getName();
-        User currentUser = userRepo.findByUsername(username);
         
-        payment.setBuyer(currentUser);
-        payment.setItem(item);
-        if (payment.isExpedited())
-        	payment.setAmount(item.getCurrentPrice() + item.getShippingPrice() + item.getExpeditedShippingPrice());
-        else
-        	payment.setAmount(item.getCurrentPrice() + item.getShippingPrice());
-        paymentService.createPayment(payment);
-
-        return "redirect:/payment/" + itemId + "/receipt?paymentId=" + payment.getPaymentId();
+        if (!payment.getCardNum().matches("^[0-9 ]*$") || !payment.getExpireDate().matches("^[0-9/]+$") || !payment.getCvv().matches("[0-9 ]+")) {
+        	ra.addFlashAttribute("error", "Card number, expiredate and/or CVV shouldn't include characters or symbols.");
+        	return "redirect:/payment/" + itemId + "/pay";
+        } else {
+	        String username = principal.getName();
+	        User currentUser = userRepo.findByUsername(username);
+	        payment.setBuyer(currentUser);
+	        payment.setItem(item);
+	        if (payment.isExpedited())
+	        	payment.setAmount(item.getCurrentPrice() + item.getShippingPrice() + item.getExpeditedShippingPrice());
+	        else
+	        	payment.setAmount(item.getCurrentPrice() + item.getShippingPrice());
+	        
+	        paymentService.createPayment(payment);
+	        return "redirect:/payment/" + itemId + "/receipt?paymentId=" + payment.getPaymentId();
+        }
     }
    
     @GetMapping("/{itemId}/receipt")
-    public String showReceipt(@PathVariable("itemId") int itemId, @RequestParam("paymentId") Long paymentId, Model model, RedirectAttributes ra) {
+    public String showReceipt(@PathVariable("itemId") int itemId, @RequestParam("paymentId") Long paymentId,
+    							Model model, RedirectAttributes ra, Principal principal) {
         Item item = itemRepo.findById(itemId);
         if (item == null) {
             ra.addFlashAttribute("error", "Item not found.");
-            return "redirect:/catalogue";
+            return "redirect:/payment";
         }
         Payment payment = paymentService.findByPaymentId(paymentId.intValue());
         if (payment == null) {
             ra.addFlashAttribute("error", "Payment not found.");
-            return "redirect:/catalogue";
+            return "redirect:/payment";
         }
-
+        String username = principal.getName();
+        User currentUser = userRepo.findByUsername(username);
+        model.addAttribute("user", currentUser);
         model.addAttribute("item", item);
         model.addAttribute("payment", payment);
 

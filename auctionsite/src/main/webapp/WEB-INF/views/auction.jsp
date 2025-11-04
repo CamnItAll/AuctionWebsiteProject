@@ -30,7 +30,14 @@
     </c:choose>
     <table border="1" align="center" cellpadding="8">
         <tr>
-            <th>Current Price</th>
+            <th>Starting Price</th>
+            <td><fmt:formatNumber value="${item.startPrice}" type="currency"/></td>
+        </tr>
+        <tr>
+            <th><c:choose>
+                <c:when test="${item.auctionType == 'FORWARD'}">Highest Bid Offer</c:when>
+                <c:when test="${item.auctionType == 'DUTCH'}">Latest Dutch Offer</c:when>
+            </c:choose></th>
             <td><fmt:formatNumber value="${item.currentPrice}" type="currency"/></td>
         </tr>
         <tr>
@@ -170,4 +177,3 @@
     </script>
 </body>
 </html>
-
