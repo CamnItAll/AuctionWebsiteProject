@@ -15,12 +15,14 @@
     <h1>${item.name}</h1>
     <p>${item.description}</p>
     <c:choose>
-        <c:when test="${item.auctionStatus == 'OPEN'}">
+        <c:when test="${item.auctionStatus == 'OPEN' && item.auctionType == 'FORWARD'}">
             <p>Time Remaining:
                 <span class="countdown"
                     data-end="${item.endDate}"
                     date-ended-text="This auction is over."></span>
             </p>
+        </c:when>
+        <c:when test="${item.auctionStatus == 'OPEN' && item.auctionType == 'DUTCH'}">
         </c:when>
         <c:otherwise>
             <p>This auction is over.</p>
@@ -168,3 +170,4 @@
     </script>
 </body>
 </html>
+
