@@ -68,8 +68,8 @@ public class Item {
     public Double getCurrentPrice() { return currentPrice; }
     public void setCurrentPrice(Double currentPrice) { this.currentPrice = currentPrice; }
     
-    public String getStatus() { return auctionStatus; }
-    public void setStatus(String auctionStatus) { this.auctionStatus = auctionStatus; }
+    public String getAuctionStatus() { return auctionStatus; }
+    public void setAuctionStatus(String auctionStatus) { this.auctionStatus = auctionStatus; }
     
     public LocalDateTime getStartDate() { return startDate; }
     

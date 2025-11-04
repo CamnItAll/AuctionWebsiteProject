@@ -52,6 +52,46 @@ public class UserController {
         return "login";
     }
     
+    @GetMapping("/forgot-password")
+    public String showForgotPasswordForm(Model model) {
+        return "forgotpass";
+    }
+
+    @PostMapping("/forgot-password")
+    public String processForgotPassword(@RequestParam("username") String username, Model model) {
+        User user = userService.findByUsername(username);
+        if (user == null) {
+            model.addAttribute("error", "No account found with that username.");
+            return "forgotpass";
+        }
+        model.addAttribute("username", username);
+        return "resetpass";
+    }
+
+    @PostMapping("/reset-password")
+    public String processResetPassword(
+    		@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("passwordConfirm") String passwordConfirm,
+            Model model) {
+
+        if (!password.equals(passwordConfirm)) {
+            model.addAttribute("error", "Passwords do not match.");
+            model.addAttribute("username", username);
+            return "resetpass";
+        }
+
+        User user = userService.findByUsername(username);
+        if (user == null) {
+            model.addAttribute("error", "Invalid username.");
+            return "forgotpass";
+        }
+
+        user.setPassword(password);
+        userService.save(user); // This re-hashes via BCrypt in your UserServiceImpl
+        model.addAttribute("message", "Password successfully updated! Please log in.");
+
+        return "login";
+    }
+    
     @GetMapping("/")
     public String rootRedirect() {
         return "redirect:/login";

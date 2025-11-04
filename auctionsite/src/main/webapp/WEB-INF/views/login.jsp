@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
@@ -22,8 +23,9 @@
           <span>${error}</span><br>
           <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
-          <button type="submit">Log In</button>
-          <h4><a href="${contextPath}/registration">Create an account</a></h4>
+          <button type="submit">Log In</button><br>
+          <a href="${contextPath}/registration"><button type="button">Create an Account</button></a><br>
+          <a href="${contextPath}/forgot-password"><button type="button">Forgot Password?</button></a><br>
         </div>
       </form>
     </div>

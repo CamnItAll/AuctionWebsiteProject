@@ -50,12 +50,15 @@ public class AuctionController {
         model.addAttribute("currentUser", currentUser);
 
         // Add flags like canBid, canBuyNow, isOwner based on the auction item and the user
-        if (item.getAuctionType().equals(AuctionType.FORWARD) && item.getStatus().equals("OPEN")) {
-        	model.addAttribute("canBid", currentUser != null && !currentUser.equals(item.getOwner()));
-        	model.addAttribute("isOwnerF", currentUser != null && currentUser.equals(item.getOwner()));
-        } else if (item.getAuctionType().equals(AuctionType.DUTCH) && item.getStatus().equals("OPEN")) {
-        	model.addAttribute("canBuyNow", currentUser != null && !currentUser.equals(item.getOwner()));
-            model.addAttribute("isOwnerD", currentUser != null && currentUser.equals(item.getOwner()));
+        if (item.getEndDate().isAfter(LocalDateTime.now()) && item.getAuctionStatus().equals("OPEN")) {
+        	System.out.println("OK!");
+	        if (item.getAuctionType().equals(AuctionType.FORWARD)) {
+	        	model.addAttribute("canBid", currentUser != null && !currentUser.equals(item.getOwner()));
+	        	model.addAttribute("isOwnerF", currentUser != null && currentUser.equals(item.getOwner()));
+	        } else if (item.getAuctionType().equals(AuctionType.DUTCH)) {
+	        	model.addAttribute("canBuyNow", currentUser != null && !currentUser.equals(item.getOwner()));
+	            model.addAttribute("isOwnerD", currentUser != null && currentUser.equals(item.getOwner()));
+	        }
         } else {
         	model.addAttribute("auctionEnded", currentUser != null && !currentUser.equals(item.getHighestBidder()));
         	model.addAttribute("auctionEndedBuy", currentUser != null && currentUser.equals(item.getHighestBidder()));

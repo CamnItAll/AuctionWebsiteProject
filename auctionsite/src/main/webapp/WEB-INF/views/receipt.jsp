@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -29,7 +30,10 @@
 
     <div class="container">
       <a href="<c:url value='/catalogue'/>"><button type="button">Back to Catalog</button></a>
-      <button onclick="document.forms['logoutForm'].submit()">Click here to logout.</button>
+      <form action="<c:url value='/perform_logout'/>" method="post" style="display:inline;">
+          <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+          <button type="submit">Click here to Logout</button>
+      </form>
   </div>
 </body>
 </html>

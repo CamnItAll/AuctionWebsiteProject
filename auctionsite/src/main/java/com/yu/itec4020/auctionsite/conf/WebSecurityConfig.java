@@ -34,8 +34,7 @@ public class WebSecurityConfig {
             .authorizeHttpRequests(auth -> auth
             		.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
             		.requestMatchers(
-	                    "/login",
-	                    "/registration",
+	                    "/login", "/registration", "/forgot-password", "/reset-password",
 	                    "/resources/**"
 	            		).permitAll()
             	.requestMatchers(

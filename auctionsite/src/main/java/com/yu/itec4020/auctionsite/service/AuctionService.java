@@ -40,7 +40,7 @@ public class AuctionService {
         auction.setHighestBidder(user); // Set highest bidder
         
         if (auction.getAuctionType().equals(AuctionType.DUTCH))
-        	auction.setStatus("CLOSED");
+        	auction.setAuctionStatus("CLOSED");
 
         itemRepo.save(auction); // Save auction state
         return bidRepo.save(bid); // Save the bid
