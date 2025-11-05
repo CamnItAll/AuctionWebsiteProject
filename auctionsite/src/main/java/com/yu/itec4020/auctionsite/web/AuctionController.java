@@ -42,6 +42,8 @@ public class AuctionController {
         // Add item and user info to the model
         model.addAttribute("item", item);
         model.addAttribute("currentUser", currentUser);
+        int dutchWaitTime = 60; // Set time before a seller can lower the price of a dutch auction
+        model.addAttribute("dutchWaitTime", dutchWaitTime);
 
         // Add flags like canBid, canBuyNow, isOwner based on the auction item and the user
         if (item.getEndDate().isAfter(LocalDateTime.now()) && item.getAuctionStatus().equals("OPEN")) {
@@ -51,6 +53,7 @@ public class AuctionController {
 	        } else if (item.getAuctionType().equals(AuctionType.DUTCH)) {
 	        	model.addAttribute("canBuyNow", currentUser != null && !currentUser.equals(item.getOwner()));
 	            model.addAttribute("isOwnerD", currentUser != null && currentUser.equals(item.getOwner()));
+	            model.addAttribute("ownerCanEdit", LocalDateTime.now().isAfter(item.getStartDate().plusMinutes(dutchWaitTime)));
 	        }
         } else {
         	model.addAttribute("auctionEnded", currentUser != null && !currentUser.equals(item.getHighestBidder()));

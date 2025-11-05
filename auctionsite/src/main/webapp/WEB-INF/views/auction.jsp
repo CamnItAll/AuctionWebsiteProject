@@ -23,6 +23,11 @@
             </p>
         </c:when>
         <c:when test="${item.auctionStatus == 'OPEN' && item.auctionType == 'DUTCH'}">
+            <p>Time until seller can update price:
+                <span class="countdown"
+                    data-end="${item.startDate.plusMinutes(dutchWaitTime)}"
+                    date-ended-text="This auction is over."></span>
+            </p>
         </c:when>
         <c:otherwise>
             <p>This auction is over.</p>
@@ -81,18 +86,25 @@
         </form>
     </c:if>
     <c:if test="${isOwnerD}">
-        <form action="<c:url value='/auction/updateDutchPrice/${item.itemId}'/>" method="post">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-            <table border="1" align="center" cellpadding="8">
-                <tr>
-                    <th>Update Dutch Price</th>
-                    <td><input type="number" name="newPrice" value="${item.startPrice}" step="0.01" required></td>
-                </tr>
-                <tr>
-                    <td colspan="2"><button type="submit">Update Price</button></td>
-                </tr>
-            </table>
-        </form>
+        <c:choose>
+            <c:when test="${ownerCanEdit}">
+                <form action="<c:url value='/auction/updateDutchPrice/${item.itemId}'/>" method="post">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                    <table border="1" align="center" cellpadding="8">
+                        <tr>
+                            <th>Update Dutch Price</th>
+                            <td><input type="number" name="newPrice" value="${item.startPrice}" step="0.01" required></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><button type="submit">Update Price</button></td>
+                        </tr>
+            </table></form></c:when>
+            <c:otherwise>
+                <table border="1" align="center" cellpadding="8">
+                    <tr><td colspan="2">Dutch prices can be lowered anytime 1 hour after the auction's start date.</td></tr>
+                </table>
+            </c:otherwise>
+        </c:choose>
     </c:if>
     <c:if test="${isOwnerF}">
         <table border="1" align="center" cellpadding="8">
