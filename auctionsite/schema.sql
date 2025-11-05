@@ -1,3 +1,5 @@
+-- Run this schema line-by-line to create the necessary tables for the auction site's database. --
+
 CREATE DATABASE IF NOT EXISTS auction_site DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
 USE auction_site;
 
@@ -26,6 +28,7 @@ CREATE TABLE IF NOT EXISTS items (
     start_date TIMESTAMP NOT NULL,
     end_date TIMESTAMP NOT NULL,
 	auction_type ENUM('FORWARD', 'DUTCH'),
+    reserve_price DOUBLE,
     shipping_price DOUBLE NOT NULL,
 	expedited_shipping_price DOUBLE NOT NULL,
 	shipping_days INTEGER NOT NULL,

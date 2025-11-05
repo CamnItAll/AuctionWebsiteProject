@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS items (
     start_date TIMESTAMP NOT NULL,
     end_date TIMESTAMP NOT NULL,
 	auction_type ENUM('FORWARD', 'DUTCH'),
+    reserve_price DOUBLE,
     shipping_price DOUBLE NOT NULL,
 	expedited_shipping_price DOUBLE NOT NULL,
 	shipping_days INTEGER NOT NULL,

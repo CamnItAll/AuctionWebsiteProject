@@ -38,6 +38,9 @@ public class Item {
 	@Column(name = "auction_type")
 	private AuctionType auctionType; // "forward" or "dutch"
 	
+	@Column(name = "reserve_price")
+	private Double reservePrice;
+	
 	@Column(name = "shipping_price", nullable = false)
     private Double shippingPrice;
 	
@@ -84,6 +87,9 @@ public class Item {
     
     public AuctionType getAuctionType() { return auctionType; }
     public void setAuctionType(AuctionType auctionType) { this.auctionType = auctionType; }
+    
+    public Double getReservePrice() { return reservePrice; }
+    public void setReservePrice(Double reservePrice) { this.reservePrice = reservePrice; }
     
     public Double getShippingPrice() { return shippingPrice; }
     public void setShippingPrice(Double shippingPrice) { this.shippingPrice = shippingPrice; }

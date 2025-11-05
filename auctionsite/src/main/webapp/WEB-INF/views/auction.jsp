@@ -23,11 +23,13 @@
             </p>
         </c:when>
         <c:when test="${item.auctionStatus == 'OPEN' && item.auctionType == 'DUTCH'}">
-            <p>Time until seller can update price:
-                <span class="countdown"
-                    data-end="${item.startDate.plusMinutes(dutchWaitTime)}"
-                    date-ended-text="This auction is over."></span>
-            </p>
+            <c:if test="${isOwnerD}">
+                <p>Time until seller can update price:
+                    <span class="countdown"
+                        data-end="${item.startDate.plusMinutes(dutchWaitTime)}"
+                        date-ended-text="This auction is over."></span>
+                </p>
+            </c:if>
         </c:when>
         <c:otherwise>
             <p>This auction is over.</p>
@@ -45,6 +47,12 @@
             </c:choose></th>
             <td><fmt:formatNumber value="${item.currentPrice}" type="currency"/></td>
         </tr>
+        <c:if test="${item.auctionType == 'DUTCH'}">
+            <tr>
+                <th>Reserve Price</th>
+                <td><fmt:formatNumber value="${item.reservePrice}" type="currency"/></td>
+            </tr>
+        </c:if>
         <tr>
             <th>Latest Bidder</th>
             <td><c:choose>

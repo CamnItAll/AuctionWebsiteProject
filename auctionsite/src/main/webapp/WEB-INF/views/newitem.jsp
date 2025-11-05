@@ -23,14 +23,19 @@
         <label for="startPrice">Starting Price:</label>
         <form:input path="startPrice" id="startPrice" type="number" step="0.01" required="true"/><br><br>
 
+        <label for="endDate">End Date:</label>
+        <form:input path="endDate" id="endDate" type="datetime-local" required="true"/><br><br>
+
         <label for="auctionType">Auction Type:</label>
-        <form:select path="auctionType" id="auctionType">
+        <form:select path="auctionType" id="auctionType" onchange="toggleReservePrice()">
             <form:option value="FORWARD" label="Forward Auction"/>
             <form:option value="DUTCH" label="Dutch Auction"/>
         </form:select><br><br>
 
-        <label for="endDate">End Date:</label>
-        <form:input path="endDate" id="endDate" type="datetime-local" required="true"/><br><br>
+        <div id="reservePriceContainer" style="display:none;">
+            <label for="reservePrice">Reserve Price (for Dutch auctions):</label>
+            <form:input path="reservePrice" id="reservePrice" type="number" step="0.01"/><br><br>
+        </div>
 
         <label for="shippingPrice">Shipping Price:</label>
         <form:input path="shippingPrice" id="shippingPrice" type="number" step="0.01" required="true"/><br><br>
@@ -47,5 +52,19 @@
     </form:form><br>
 
     <a href="<c:url value='/catalogue/'/>"><button type="button">Back to Catalog</button></a>
+
+    <script>
+    function toggleReservePrice() {
+        const type = document.getElementById('auctionType').value;
+        const reserveDiv = document.getElementById('reservePriceContainer');
+        if (type === 'DUTCH') {
+            reserveDiv.style.display = 'block';
+            document.getElementById('reservePrice').required = true;
+        } else {
+            reserveDiv.style.display = 'none';
+            document.getElementById('reservePrice').required = false;
+        }
+    }
+    </script>
 </body>
 </html>

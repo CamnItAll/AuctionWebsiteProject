@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.yu.itec4020.auctionsite.model.Item;
 import com.yu.itec4020.auctionsite.model.Payment;
-import com.yu.itec4020.auctionsite.repo.ItemRepository;
 import com.yu.itec4020.auctionsite.repo.PaymentRepository;
 
 @Service

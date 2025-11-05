@@ -36,8 +36,7 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		
-		<!-- This dependency (and the war packaging) allows this site to run in an external Tomcat;
-		If you wanna use the embedded Tomcat, remove the war packaging and this dependency before running -->
+		<!-- This dependency (and the war packaging) allows this site to run in an external Tomcat -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
@@ -74,12 +73,6 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
-		<!-- For embedded Tomcat; comment out before using mvn clean package -->
-		<!--<dependency>
-            <groupId>org.apache.tomcat.embed</groupId>
-            <artifactId>tomcat-embed-jasper</artifactId>
-        </dependency>!-->
 
         <dependency>
     		<groupId>jakarta.servlet</groupId>

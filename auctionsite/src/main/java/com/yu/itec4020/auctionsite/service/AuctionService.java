@@ -4,12 +4,8 @@ import com.yu.itec4020.auctionsite.model.Item;
 import com.yu.itec4020.auctionsite.model.User;
 import com.yu.itec4020.auctionsite.model.enums.AuctionType;
 import com.yu.itec4020.auctionsite.model.Bid;
-import com.yu.itec4020.auctionsite.model.Payment;
 import com.yu.itec4020.auctionsite.repo.ItemRepository;
 import com.yu.itec4020.auctionsite.repo.BidRepository;
-import com.yu.itec4020.auctionsite.repo.PaymentRepository;
-
-import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,7 +34,6 @@ public class AuctionService {
 
         auction.setCurrentPrice(bidAmount); // Update auction's current price
         auction.setHighestBidder(user); // Set highest bidder
-        
         if (auction.getAuctionType().equals(AuctionType.DUTCH))
         	auction.setAuctionStatus("CLOSED");
 
@@ -47,11 +42,15 @@ public class AuctionService {
         }
 	
 	public void updateDutchAuctionPrice(int itemId, Double newPrice) {
-        Item item = findByAuctionId(itemId);
-        if (item.getAuctionType().equals(AuctionType.DUTCH)) {
-            item.setCurrentPrice(newPrice);
-            itemRepo.save(item);
-        }
-    }
+	    Item item = findByAuctionId(itemId);
+	    if (item.getAuctionType().equals(AuctionType.DUTCH)) {
+	        item.setCurrentPrice(newPrice);
+	        if (item.getReservePrice() != null && newPrice <= item.getReservePrice()) {
+	            item.setAuctionStatus("CLOSED");
+	        }
+
+	        itemRepo.save(item);
+	    }
+	}
 
 }
