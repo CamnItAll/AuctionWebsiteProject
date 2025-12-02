@@ -1,0 +1,9 @@
+How to run this project with Docker:
+1. cd the root folder in a command window/PowerShell
+2. Run "mvn clean package -DskipTests"
+3. Run "docker-compose build"
+4. Run "docker-compose up"
+
+If you want to reset the Docker containers:
+1. Run "docker-compose down -v"
+2. Repeat steps 2-4 above

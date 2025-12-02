@@ -1,0 +1,217 @@
+body { 
+	font-family: 'Arial', sans-serif; 
+	background-color: rgb(179, 188, 243);
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.header{
+	margin: 6px 32px 16px;
+	display: block;
+}
+
+.page_body{
+	width: 70%;
+	margin: auto;
+}
+
+.no_padding{
+	padding: 0px;
+}
+
+.payment_info{
+	border: solid;
+	text-align: left;
+}
+
+.item_listing_window{
+	width: 90%;
+	margin: auto;
+	margin-bottom: 20px;
+	height: auto;
+	border-radius: 16px;
+	padding: 24px;
+	outline: solid gray;
+	display: inline-block;
+	background-color: lightgray;
+}
+
+.listing_name{
+	margin-bottom: 16px;
+	width: 100%;
+	display: inline-block;
+	text-align: left;
+	border-bottom: solid gray;
+}
+
+.auction_info{
+	width: 25%;
+	float: left;
+	text-align: left;
+	display: inline-block;
+	border-right: solid gray;
+	padding-right: 16px;
+}
+
+.item_description{
+	width: 70%;
+	float: right;
+	text-align: left;
+	display: inline-block;
+}
+
+.searchbar{
+	width: calc(100% - 60px)!important;
+	float: left;
+}
+
+.button_container{
+	height: 44px;
+	width: 60px;
+	display: inline-block;
+	float: right;
+}
+
+.searchbutton{
+	height: 100%;
+	width: 100%;
+	display: inline-block;
+}
+
+.placeholder{
+	min-height: 70px;
+}
+
+.bubble_window{
+	margin: auto;
+	border-radius: 24px;
+	padding: 36px;
+	padding-top: 108px;
+	width: 1040px;
+	outline: solid gray;
+	display: inline-block;
+	background-color: lightgray;
+}
+
+.bubble_left{
+	float: left;
+	/* height: 750px; */
+	width: 48%;
+	display: inline-block;
+	/* outline: solid; */
+}
+.bubble_text_left{
+	float: left;
+	display: inline-block;
+	text-align: left;
+}
+
+.bubble_text{
+	margin: 0px;
+	padding-bottom: 16px;
+}
+
+.bubble_right{
+	float: right;
+	/* height: 750px; */
+	width: 48%;
+	display: inline-block;
+	/* outline: solid; */
+}
+
+.form_container{
+	margin: auto;
+	width: 410px;
+	/* border-style: solid; */
+}
+
+.elementfn{
+	padding: 0!important;
+	padding-bottom: 16px!important;
+	min-height: auto;
+	display: inline-block;
+	width: 48%;
+	float: left;
+}
+.elementln{
+	padding: 0!important;
+	padding-bottom: 16px!important;
+	min-height: auto;
+	display: block;
+	width: 48%;
+	float: right;
+}
+
+
+
+.form_element{
+	padding: 0!important;
+	padding-bottom: 16px!important;
+	min-height: auto;
+	display: inline-block;
+	width: 100%;
+	/* float: right; */
+}
+
+.textbox {
+    align-items: center;
+    border-radius: 8px;
+    border: 1px solid;
+    box-sizing: border-box;
+    /* color: var(--textbox-foreground-color,var(--color-foreground-primary)); */
+    display: inline-flex;
+    font-size: 0.875rem;
+    gap: 8px;
+    overflow: hidden;
+    position: relative;
+    /* width: fit-content; */
+	width: inherit;
+	background-color: white;
+}
+
+.horizontal{
+	display: inline-flex;
+}
+
+input:focus {
+    outline:none;
+}
+
+.textbox_container{
+	display: inline-block;
+	width: 100%;
+	position: relative;
+}
+
+.textbox_input{
+    -webkit-appearance: none;
+	border-color: transparent;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+    appearance: none;
+    flex-grow: 1;
+    font-size: 1em;
+    height: 40px;
+    display: inline-block;
+	margin: 0;
+    outline: none;
+	outline-color: transparent;
+	width: inherit;
+	padding-inline-start: 16px;
+	padding-inline-end: 16px;
+	padding-top: 18px;
+	padding-bottom: 2px;
+	padding: 0;
+    vertical-align: middle;
+	margin-left: 16px;
+	margin-right: 16px;
+}
+
+.receipt_total {
+	padding: 100px 20px 100px 20px;
+	background-color: white;
+}
