@@ -7,51 +7,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="<c:url value='/css/styles.css' />">
     <meta charset="utf-8">
     <title>New Item</title>
 </head>
 <body style="text-align:center;">
-    <h1>Create New Auction</h1>
+    <div class="header">
+        <div class="placeholder">
+		</div>
+	</div>
+	<div class="bubble_window">
+		<div class="bubble_left">
+			<span class="bubble_text_left">
+				<h1 class="bubble_text">Create New Auction</h1>
+				<a class="bubble_text" href="<c:url value='/catalogue'/>">←Back to Catalogue</a>
+			</span>
+		</div>
+		<div class="bubble_right">
+			<form:form action="${contextPath}/catalogue/create" method="POST" modelAttribute="itemForm">
+				<label for="name">Item Name:</label>
+				<form:input path="name" id="name" required="true"/><br><br>
 
-    <form:form action="${contextPath}/catalogue/create" method="POST" modelAttribute="itemForm">
-        <label for="name">Item Name:</label>
-        <form:input path="name" id="name" required="true"/><br><br>
+				<label for="description">Description:</label>
+				<form:textarea path="description" id="description" required="true"/><br><br>
 
-        <label for="description">Description:</label>
-        <form:textarea path="description" id="description" required="true"/><br><br>
+				<label for="startPrice">Starting Price:</label>
+				<form:input path="startPrice" id="startPrice" type="number" step="0.01" required="true"/><br><br>
 
-        <label for="startPrice">Starting Price:</label>
-        <form:input path="startPrice" id="startPrice" type="number" step="0.01" required="true"/><br><br>
+				<label for="endDate">End Date:</label>
+				<form:input path="endDate" id="endDate" type="datetime-local" required="true"/><br><br>
 
-        <label for="endDate">End Date:</label>
-        <form:input path="endDate" id="endDate" type="datetime-local" required="true"/><br><br>
+				<label for="auctionType">Auction Type:</label>
+				<form:select path="auctionType" id="auctionType" onchange="toggleReservePrice()">
+					<form:option value="FORWARD" label="Forward Auction"/>
+					<form:option value="DUTCH" label="Dutch Auction"/>
+				</form:select><br><br>
 
-        <label for="auctionType">Auction Type:</label>
-        <form:select path="auctionType" id="auctionType" onchange="toggleReservePrice()">
-            <form:option value="FORWARD" label="Forward Auction"/>
-            <form:option value="DUTCH" label="Dutch Auction"/>
-        </form:select><br><br>
+				<div id="reservePriceContainer" style="display:none;">
+					<label for="reservePrice">Reserve Price (for Dutch auctions):</label>
+					<form:input path="reservePrice" id="reservePrice" type="number" step="0.01"/><br><br>
+				</div>
 
-        <div id="reservePriceContainer" style="display:none;">
-            <label for="reservePrice">Reserve Price (for Dutch auctions):</label>
-            <form:input path="reservePrice" id="reservePrice" type="number" step="0.01"/><br><br>
-        </div>
+				<label for="shippingPrice">Shipping Price:</label>
+				<form:input path="shippingPrice" id="shippingPrice" type="number" step="0.01" required="true"/><br><br>
 
-        <label for="shippingPrice">Shipping Price:</label>
-        <form:input path="shippingPrice" id="shippingPrice" type="number" step="0.01" required="true"/><br><br>
+				<label for="expeditedShippingPrice">Expedited Shipping Price:</label>
+				<form:input path="expeditedShippingPrice" id="expeditedShippingPrice" type="number" step="0.01" required="true"/><br><br>
 
-        <label for="expeditedShippingPrice">Expedited Shipping Price:</label>
-        <form:input path="expeditedShippingPrice" id="expeditedShippingPrice" type="number" step="0.01" required="true"/><br><br>
+				<label for="shippingDays">Shipping Days (must be minimum 5 days):</label>
+				<form:input path="shippingDays" id="shippingDays" type="number" min='5' required="true"/><br><br>
 
-        <label for="shippingDays">Shipping Days (must be minimum 5 days):</label>
-        <form:input path="shippingDays" id="shippingDays" type="number" min='5' required="true"/><br><br>
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-
-        <button type="submit">Create Auction</button>
-    </form:form><br>
-
-    <a href="<c:url value='/catalogue/'/>"><button type="button">Back to Catalog</button></a>
+				<button type="submit">Create Auction</button>
+			</form:form>
+			</div>
+		</div>
+	</div>
 
     <script>
     function toggleReservePrice() {

@@ -8,14 +8,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="<c:url value='/css/styles.css' />">
+	<link rel="stylesheet" href="<c:url value='/css/styles.css' />">
     <meta charset="utf-8">
     <title>Payment</title>
 </head>
 <body style="text-align:center;">
     <h2>Pay Now</h2>
-
-    <table border="1" align="center" cellpadding="8">
+    <div class="page_body receipt_total">
+    <br><table border="1" align="center" cellpadding="8">
         <tr>
             <th>Item</th>
             <td>${item.name}</td>
@@ -42,26 +42,29 @@
     <c:if test="${not empty formError}">
         <div>${formError}</div>
     </c:if><br>
+    </div><br>
 
-    <form:form action="${contextPath}/payment/${item.itemId}/pay" method="post" modelAttribute="paymentForm">
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+	<div class="page_body receipt_total" style="padding: 20px 30px 20x 30px;">
+		<br><form:form action="${contextPath}/payment/${item.itemId}/pay" method="post" modelAttribute="paymentForm">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
-        <label for="cardName">Name on Card</label><br/>
-        <form:input name="cardName" path="cardName" required="true"/><br><br>
+			<label for="cardName">Name on Card</label><br/>
+			<form:input name="cardName" path="cardName" required="true"/><br><br>
 
-        <label for="cardNum">Card Number</label><br/>
-        <form:input name="cardNum" path="cardNum" placeholder="XXXX XXXX XXXX XXXX" maxlength="19" required="true"/><br><br>
+			<label for="cardNum">Card Number</label><br/>
+			<form:input name="cardNum" path="cardNum" placeholder="XXXX XXXX XXXX XXXX" maxlength="19" required="true"/><br><br>
 
-        <label for="expireDate">Expiry (MM / YYYY)</label><br/>
-        <form:input name="expireDate" path="expireDate" maxlength="7" required="true"/><br><br>
+			<label for="expireDate">Expiry (MM / YYYY)</label><br/>
+			<form:input name="expireDate" path="expireDate" maxlength="7" required="true"/><br><br>
 
-        <label for="cvv">CVV</label><br/>
-        <form:input name="cvv" path="cvv" maxlength="3" required="true"/><br><br>
+			<label for="cvv">CVV</label><br/>
+			<form:input name="cvv" path="cvv" maxlength="3" required="true"/><br><br>
 
-        <label for="isExpedited">Expedite Shipment?</label>
-        <form:checkbox path="expedited" id="isExpedited" /><br><br>
+			<label for="isExpedited">Expedite Shipment?</label>
+			<form:checkbox path="expedited" id="isExpedited" /><br><br>
 
-        <button type="submit">Submit Payment</button>
-    </form:form>
+			<button type="submit">Submit Payment</button>
+		</form:form><br>
+	</div>
 </body>
 </html>

@@ -55,11 +55,16 @@ public class PaymentController {
             ra.addFlashAttribute("errorMessage", "Item not found.");
             return "redirect:/auction/" + itemId;
         }
+        String username = principal.getName();
+        User currentUser = userRepo.findByUsername(username);
+        if (currentUser == null) {
+            ra.addFlashAttribute("errorMessage", "User not found.");
+            return "redirect:/auction/" + itemId;
+        }
 
-        Long currentUserId = getCurrentUserIdOrNull();
-        if (item.getHighestBidder() == null || item.getHighestBidder().getId() == null || item.getHighestBidder().getId().equals(currentUserId)) {
+        Long currentUserId = currentUser.getId();
+        if (item.getHighestBidder() == null || item.getHighestBidder().getId() == null || !item.getHighestBidder().getId().equals(currentUserId)) {
         	ra.addFlashAttribute("errorMessage", "Only the winner can pay for this item.");
-            System.out.println(!item.getHighestBidder().getId().equals(currentUserId));
             System.out.println("Screwed up at 4");
             return "redirect:/auction/" + itemId;
         }
@@ -81,8 +86,6 @@ public class PaymentController {
         	ra.addFlashAttribute("error", "Card number, expiredate and/or CVV shouldn't include characters or symbols.");
         	return "redirect:/payment/" + itemId + "/pay";
         } else {
-	        String username = principal.getName();
-	        User currentUser = userRepo.findByUsername(username);
 	        payment.setBuyer(currentUser);
 	        payment.setItem(item);
 	        if (payment.isExpedited())
@@ -118,6 +121,5 @@ public class PaymentController {
     }
 
     // --- helpers ---
-    private Long getCurrentUserIdOrNull() { return 1L; } 
     private boolean isBlank(String s) { return s == null || s.trim().isEmpty(); }
 }

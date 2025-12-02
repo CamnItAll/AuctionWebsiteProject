@@ -1,6 +1,4 @@
-# Runtime image with Java 18 (matches your pom.xml java.version)
-# FROM eclipse-temurin:18-jdk
-
+# Runtime image with Tomcat 10
 FROM tomcat:10.1-jdk21
 
 # Remove default webapps so yours becomes the root app
@@ -15,7 +13,5 @@ ENV SPRING_DATASOURCE_USERNAME=root
 ENV SPRING_DATASOURCE_PASSWORD=atthelastsecond
 ENV SPRING_JPA_HIBERNATE_DDL_AUTO=validate
 
+# Expose entrypoint
 EXPOSE 8080
-
-# Run the Spring Boot WAR (embedded Tomcat)
-# ENTRYPOINT ["java", "-jar", "app.war"]

@@ -32,7 +32,7 @@ public class CatalogueController {
 	@Autowired
     private AuctionService auctionService;
 	
-	// 1️⃣ When visiting /catalogue/ (no keyword)
+	// When visiting /catalogue/ (no keyword)
     @GetMapping("/")
     public String viewAllItems(Model model) {
         List<Item> items = catalogueService.findAllItems();
@@ -40,7 +40,7 @@ public class CatalogueController {
         return "catalogue";
     }
 
-    // 2️⃣ When visiting /catalogue/?keyword=...
+    // When visiting /catalogue/?keyword=...
     @GetMapping(params = "keyword")
     public String searchItems(@RequestParam("keyword") String keyword, Model model) {
         List<Item> items = catalogueService.searchAuctions(keyword);

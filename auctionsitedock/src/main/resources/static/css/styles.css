@@ -212,6 +212,7 @@ input:focus {
 }
 
 .receipt_total {
-	padding: 100px 20px 100px 20px;
+	text-align: center;
+	border: solid;
 	background-color: white;
 }

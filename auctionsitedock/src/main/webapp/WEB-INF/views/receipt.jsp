@@ -17,7 +17,7 @@
         <div class="placeholder">
         </div>
     </div>
-    <div class="page_body receipt_total">
+    <div class="page_body receipt_total" style="padding: 100px 20px 100px 20px;">
         <div style="text-align:left;">
             <h1 style="font-weight:bold;float:right;">Order Receipt</h1>
             <h4 style="font-weight:bold;">Billed To</h4>
