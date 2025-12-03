@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/catalogue")
@@ -32,7 +33,7 @@ public class CatalogueController {
 	@Autowired
     private AuctionService auctionService;
 	
-	// When visiting /catalogue/ (no keyword)
+	// When first visiting /catalogue/ (no keyword)
     @GetMapping("/")
     public String viewAllItems(Model model) {
         List<Item> items = catalogueService.findAllItems();
@@ -54,8 +55,9 @@ public class CatalogueController {
         return "newitem";
     }
 	
+    // Make new items/auctions
     @PostMapping("/create")
-    public String createNewAuction(@ModelAttribute("itemForm") Item item, @RequestParam String endDate, Principal principal) {
+    public String createNewAuction(@ModelAttribute("itemForm") Item item, @RequestParam String endDate, Principal principal, RedirectAttributes ra) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         String username = principal.getName();
         User currentUser = userRepo.findByUsername(username);
@@ -64,6 +66,7 @@ public class CatalogueController {
         item.setCurrentPrice(item.getStartPrice());
         item.setEndDate(LocalDateTime.parse(endDate, formatter));  // Convert endDate string to LocalDateTime
         auctionService.saveItem(item);
+        ra.addFlashAttribute("message", "New auction made!");
         return "redirect:/catalogue";
     }
 

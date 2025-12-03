@@ -11,11 +11,14 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     Item findById(int id);
 
+    // For search function (used earlier in project for testing)
     List<Item> findByNameContaining(String keyword);
 
+    // Find items that haven't been paid for yet (i.e. not connected to a payment object)
     @Query("SELECT i FROM Item i WHERE i.payment IS NULL")
     List<Item> findAllUnpaid();
 
+    // Also for search function, but filters out paid-for items
     @Query("SELECT i FROM Item i WHERE i.payment IS NULL AND LOWER(i.name) LIKE LOWER(CONCAT('%', :keyword, '%'))")
     List<Item> searchUnpaidByName(@Param("keyword") String keyword);
 }

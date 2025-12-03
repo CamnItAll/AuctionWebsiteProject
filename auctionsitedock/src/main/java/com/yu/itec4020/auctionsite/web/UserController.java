@@ -18,6 +18,9 @@ public class UserController {
     @Autowired
     private UserValidator userValidator;
 
+    @Autowired
+    private SecurityService securityService;
+
     @GetMapping("/registration")
     public String registration(Model model) {
         model.addAttribute("userForm", new User());
@@ -80,7 +83,8 @@ public class UserController {
         }
         user.setPassword(password);
         userService.save(user); // This re-hashes via BCrypt in your UserServiceImpl
-        model.addAttribute("message", "Password successfully updated! Please log in.");
+        model.addAttribute("message", "Password successfully updated!");
+        securityService.autoLogin(user.getUsername(), password);
 
         return "login";
     }

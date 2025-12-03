@@ -21,7 +21,7 @@ public class PaymentService {
 	public Payment createPayment(Payment payment) {
 	    Payment saved = paymentRepo.save(payment);
 
-	    // Check the Item now knows it has a Payment
+	    // Double-check if the Item exists before setting the Payment
 	    Item item = saved.getItem();
 	    if (item != null) {
 	        item.setPayment(saved);

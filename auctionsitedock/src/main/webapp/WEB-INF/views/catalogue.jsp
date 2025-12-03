@@ -23,6 +23,9 @@
 			</form>
 
 			<h1>Welcome, ${pageContext.request.userPrincipal.name}!</h1>
+			<c:if test="${not empty message}">
+				<div style="color: green; font-weight: bold;">${message}</div>
+			</c:if>
 		</c:if>
 	</div>
 	<div class="page_body" id="catalogue">
@@ -71,7 +74,7 @@
 					</c:choose>
 							<p>
 							<form action="<c:url value='/auction/${item.itemId}'/>" method="get">
-								<button type="submit">Bid on ${item.name}</button>
+								<button type="submit">View ${item.name}</button>
 							</form>
 							
 						</div>

@@ -36,8 +36,8 @@ public class CatalogueService {
 
     public List<Item> findAllItems() {
         List<Item> items = itemRepo.findAllUnpaid();
-
-        // Same as searchAuctions()
+        // Same as searchAuctions(), but for all available items
+        // (Used when arriving from login)
         for (Item item : items) {
             if (item.getAuctionType().equals(AuctionType.FORWARD)
                     && item.getEndDate().isBefore(java.time.LocalDateTime.now())

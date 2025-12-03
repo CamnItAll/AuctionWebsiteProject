@@ -28,6 +28,7 @@ public class WebSecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    // Ensure certain links only work after logging in
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -44,6 +45,7 @@ public class WebSecurityConfig {
             			).authenticated()
                 .anyRequest().authenticated()
             )
+            // Login/logout links
             .formLogin(form -> form
                 .loginPage("/login")// GET /login -> your JSP
                 .loginProcessingUrl("/perform_login")// POST /perform_login -> Spring Security handles login

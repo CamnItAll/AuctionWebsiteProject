@@ -25,6 +25,7 @@ public class AuctionService {
         return itemRepo.save(item);
     }
 	
+    // Store bid history in database
 	public Bid placeBid(int itemId, Double bidAmount, User user) throws IllegalArgumentException{
         Item auction = findByAuctionId(itemId);
         Bid bid = new Bid();
@@ -45,6 +46,7 @@ public class AuctionService {
 	    Item item = findByAuctionId(itemId);
 	    if (item.getAuctionType().equals(AuctionType.DUTCH)) {
 	        item.setCurrentPrice(newPrice);
+            // If new price drops below reserve, close the auction
 	        if (item.getReservePrice() != null && newPrice <= item.getReservePrice()) {
 	            item.setAuctionStatus("CLOSED");
 	        }
